@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './home.less'
 
 import Header from '@/components/home/header'
+import MainNav from '@/components/home/main-nav'
 
 interface sortableType {
     [index: string]: React.ElementType
@@ -9,7 +10,8 @@ interface sortableType {
 }
 
 const sortable:sortableType = {
-    'header': Header
+    'header': Header,
+    'mainNav': MainNav
 }
 
 function Home() {
@@ -19,7 +21,7 @@ function Home() {
     // 同时右边会有一个导航条，fixed，每一块mutation时判断与顶点的距离然后指到对应的块上。
     // 这些模块可排序。
 
-    let defaultComponents:string[] = ['header']
+    let defaultComponents:string[] = ['header', 'mainNav']
 
     let [components, setComponents] = useState(defaultComponents)
 

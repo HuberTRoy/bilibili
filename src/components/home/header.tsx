@@ -3,7 +3,6 @@ import './header.less'
 import Search from '@/components/search/search'
 import Login from '@/components/login/login'
 import { Button } from 'antd';
-import { transform } from 'typescript';
 
 interface navLink {
     prefix?: string,
