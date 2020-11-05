@@ -57,41 +57,62 @@ function Header () {
         blurContent: 5
     }
 
+    let defaultLayerThree = {
+        transform: 'translate(0px)',
+        current: 0,
+        filter: 'blur(6px)',
+        blurContent: 5
+    }
+
     const [layerOne, setLayerOne] = useState(defaultLayerOne)
     const [layerTwo, setLayerTwo] = useState(defaultLayerTwo)
+    const [layerThree, setLayerThree] = useState(defaultLayerThree)
+    const [leaveState, setLeaveState] = useState(false)
     const directIndex = useRef(0)
+
+    const layOneTranslate = 0.18576324
+    const layTwoTranslate = 0.18576324
+    const layThreeTranslate = 0.477777
+    const layOneBlur = 0.185763241
+    const layTwoBlur = 0.185763241
+    const layThreeBlur = 0.0123123
+
+    function getLeftOrRightTranslateAndBlur(main:any, translateValue:number, blurValue:number, translateValueOp:string, blurValueOp:string) {
+        let trans = translateValueOp === 'plus' ? (main.current + translateValue) : (main.current - translateValue)
+        let blur = blurValueOp === 'plus' ? main.blurContent + blurValue : main.blurContent - blurValue
+
+        if (blur > 10) {
+            blur = 10
+        }
+
+        if (blur < -10) {
+            blur = -10
+        }
+
+        return {
+            transform: `translate(${trans}px)`,
+            current: trans,
+            filter: `blur(${blur}px)`,
+            blurContent: blur
+        }
+    }
 
     function mouseMoveEvent(event:any) {
         // console.log(event.pageX)
+        setLeaveState(false)
         if (event.pageX > directIndex.current) {
-            setLayerOne({
-                transform: `translate(${layerOne.current + 0.2}px)`,
-                current: layerOne.current + 0.2,
-                filter: `blur(${layerOne.blurContent + 0.21}px)`,
-                blurContent: layerOne.blurContent + 0.21
-            })
+            setLayerOne(getLeftOrRightTranslateAndBlur(layerOne, layOneTranslate, layOneBlur, 'plus', 'plus'))
 
-            setLayerTwo({
-                transform: `translate(${layerTwo.current + 0.2}px)`,
-                current: layerTwo.current + 0.2,
-                filter: `blur(${layerTwo.blurContent - 0.21}px)`,
-                blurContent: layerTwo.blurContent - 0.21
+            setLayerTwo(getLeftOrRightTranslateAndBlur(layerTwo, layTwoTranslate, layTwoBlur, 'plus', 'minus'))
 
-            })
+            setLayerThree(getLeftOrRightTranslateAndBlur(layerThree, layThreeTranslate, layThreeBlur, 'plus', 'minus'))
         } else {
-            setLayerOne({
-                transform: `translate(${layerOne.current - 0.2}px)`,
-                current: layerOne.current - 0.2,
-                filter: `blur(${layerOne.blurContent - 0.21}px)`,
-                blurContent: layerOne.blurContent - 0.21
-            })
-
-            setLayerTwo({
-                transform: `translate(${layerTwo.current - 0.2}px)`,
-                current: layerTwo.current - 0.2,
-                filter: `blur(${layerTwo.blurContent + 0.21}px)`,
-                blurContent: layerTwo.blurContent + 0.21
-            }) 
+            setLayerOne(getLeftOrRightTranslateAndBlur(layerOne, layOneTranslate, layOneBlur, 'minus', 'minus'))
+            
+            setLayerTwo(getLeftOrRightTranslateAndBlur(layerTwo, layTwoTranslate, layTwoBlur, 'minus', 'plus'))
+        
+            setLayerThree(getLeftOrRightTranslateAndBlur(layerThree, layThreeTranslate, layThreeBlur, 'minus', 'plus'))
+        
         }
         
         directIndex.current = event.pageX
@@ -100,6 +121,8 @@ function Header () {
     function mouseLeave (){
         setLayerOne(defaultLayerOne)
         setLayerTwo(defaultLayerTwo)
+        setLayerThree(defaultLayerThree)
+        setLeaveState(true)
         directIndex.current = 0
     }
 
@@ -134,12 +157,12 @@ function Header () {
             </div>
             
             <div className="bgWrapper" onMouseMove={mouseMoveEvent} onMouseLeave={mouseLeave}>
-                <img className="bgImage layerBlur" src="/demo/layer.png" alt=""/>
-                <img style={layerOne} className="bgImage" src="/demo/layer1.png" alt=""/>
-                <img className="bgImage layerBlur" src="/demo/layer2.png" alt=""/>
-                <img className="bgImage layerSlideBlur" src="/demo/layer3.png" alt=""/>
-                <img style={layerTwo} className="bgImage layerBlur" src="/demo/layer4.png" alt=""/>
-                <img className="bgImage layerBlur" src="/demo/layer5.png" alt=""/>
+                <img className="bgImage layerBlur" height="258" width="3096" src="/demo/layer.png" alt=""/>
+                <img className={["bgImage", leaveState ? 'transitionState' : ''].join(' ')} style={layerOne} height="250" width="3000" src="/demo/layer1.png" alt=""/>
+                <img className={["bgImage","layerBlur", leaveState ? 'transitionState' : ''].join(" ")} style={layerThree} height="155" width="1858" src="/demo/layer2.png" alt=""/>
+                <img className={["bgImage", "three", leaveState ? 'transitionState' : ''].join(" ")} style={layerTwo} height="155" width="1858" src="/demo/layer3.png" alt=""/>
+                <img className={["bgImage","layerBlur", leaveState ? 'transitionState' : ''].join(" ")} style={layerTwo} src="/demo/layer4.png" alt=""/>
+                <img className={["bgImage","layerBlur", leaveState ? 'transitionState' : ''].join(" ")} style={layerThree} src="/demo/layer5.png" alt=""/>
             </div>
         </div>
     )
