@@ -1,0 +1,29 @@
+@import '@/style/base.less';
+
+.first-screen {
+    display: flex;
+    justify-content: space-between;
+
+    .carouse-custom-style();
+
+    .recommend-box {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        width: 854px;
+        height: 242px;
+        // 成也gap败也gap。
+        // 都得自己算了。
+        grid-row-gap: 10px;
+        grid-column-gap: 10px;
+
+        .recommend-box-item {
+            width: 206px;
+            // height: 116px;
+
+            .recommend-box-item__image {
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+}

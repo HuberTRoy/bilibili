@@ -1,0 +1,84 @@
+.main-nav {
+    display: flex;
+    flex-direction: column;
+
+    .main-nav-top {
+        display: flex;
+        align-items: center;
+        padding: 20px 0;
+
+        .big-nav {
+            display: flex;
+
+            .big-nav-item {
+                display: flex;
+                flex-direction: column;
+                margin: 0 auto 4px;
+                align-items: center;
+                justify-content: center;
+                width: 58px;
+
+                img {
+                    width: 36px;
+                    height: 36px;
+                }
+            }
+        }
+
+        .tag-group {
+            display: flex;
+            // flex-direction: column;
+            flex-wrap: wrap;
+            height: 68px;
+            flex-grow: 1;
+
+            .tag-group-item {
+                display: flex;
+                align-items: center;
+                font-size: 14px;
+                height: 34px;
+                padding: 0 8px;
+                .tag-group-item__label {
+                    font-style: normal;
+                    font-size: 12px;
+                    display: inline-block;
+                    background: #73c9e5;
+                    border-radius: 2px;
+                    color: #fff;
+                    margin-left: 1px;
+                    transform: scale(.85);
+                    width: 32px;
+                    text-align: center;
+                }
+            }
+        }
+
+        .small-nav {
+            display: flex;
+            flex-wrap: wrap;
+            height: 68px;
+            width: 242px;
+            flex-shrink: 0;
+
+            .small-nav-item {
+                height: 34px;
+                padding: 0 8px;
+                font-size: 12px;
+                display: flex;
+                align-items: center;
+                
+                img {
+                    width: 1.8em;
+                    height: 1.8em;
+                }
+            }
+        }
+
+        .separator {
+            display: inline-block;
+            height: 46px;
+            border-left: 1px solid #e7e7e7;
+            margin: 0 20px;
+        }
+    }
+}
