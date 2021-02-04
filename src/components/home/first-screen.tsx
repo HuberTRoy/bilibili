@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Carousel, Divider } from 'antd';
+import { Carousel } from 'antd';
 
 import './first-screen.less'
 
